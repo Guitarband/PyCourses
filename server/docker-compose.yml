@@ -1,0 +1,8 @@
+services:
+  pythonExecuter:
+    build: .
+    volumes:
+      - ./code.py:/app/code.py
+    network_mode: "bridge"
+    stdin_open: true
+    tty: true

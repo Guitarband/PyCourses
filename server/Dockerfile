@@ -4,4 +4,10 @@ WORKDIR /app
 
 COPY . .
 
-CMD ["python3", "scripts/pythonExecuter.py"]
+RUN pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 8080
+
+ENV NAME World
+
+CMD ["python3", "scripts/pythonExecuter.py", "code/code.py"]

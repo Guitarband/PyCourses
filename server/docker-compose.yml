@@ -1,8 +1,10 @@
 services:
   pythonExecuter:
     build: .
+    ports:
+      - "8080:8080"
     volumes:
-      - ./code.py:/app/code.py
+      - .:/app
     network_mode: "bridge"
     stdin_open: true
     tty: true

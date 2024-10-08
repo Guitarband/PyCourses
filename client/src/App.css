@@ -18,7 +18,8 @@
 .taskMap{
   padding: 5vh 10vw;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
   margin: 0 auto;
 }
 
@@ -28,7 +29,7 @@
   padding: 20px;
   justify-content: flex-start;
   align-items: start;
-  width: 300px;
+  width: 275px;
   height: 200px;
   border-radius: 10px;
   background-color: #f9f9f9;
@@ -40,7 +41,6 @@
 .taskSlot a{
   font-size: 1.2em;
 }
-
 
 .CourseContent{
   display: flex;
@@ -62,7 +62,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.taskData p {
+#taskDescription {
   font-size: 1.2em;
   line-height: 1.5;
   color: #555;
@@ -102,6 +102,16 @@
   width: 100%;
   height: 50vh;
   text-align: left;
+}
+
+#runButton{
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #008000;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 #console{

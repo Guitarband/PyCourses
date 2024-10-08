@@ -92,8 +92,8 @@ function WebIDE({language, baseCode}) {
             editorConsole.srcdoc = result.error
         }else{
             let output = result.output.split('\n')[0]
-            console.log("Output: ", output)
-            editorConsole.srcdoc = output
+            console.log("Output: ", result)
+            editorConsole.srcdoc = result.output
         }
     }
 
@@ -101,7 +101,7 @@ function WebIDE({language, baseCode}) {
       <div className={"IDE"}>
           <div className={"editor"}>
               <label>Python</label>
-              <button onClick={runCode}>Run</button>
+              <button id={"runButton"} onClick={executePython}>Run</button>
               <div id={"editor-input"}></div>
           </div>
           <div className={"output"}>

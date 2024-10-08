@@ -5,6 +5,7 @@ function taskData({courseTitle, courseURL, task}) {
       <div className={"taskData"}>
           <a id={"returnToCourse"} href={`/course/${courseURL}/`}>{"<--"} Return to course overview</a>
           <h2 id={"taskTitle"}>{task.title}</h2>
+          <p id={"taskDescription"}>{task.description}</p>
           <p>{task.details}</p>
           {task.hasOwnProperty('previousTask') ?
             <a id={'previousTask'} href={`/course/${courseURL}/${task.previousTaskURL}`}>Previous: {task.previousTask}</a> : null}

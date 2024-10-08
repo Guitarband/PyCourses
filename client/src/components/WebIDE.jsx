@@ -4,10 +4,11 @@ import * as monaco from 'monaco-editor'
 function WebIDE({language, baseCode}) {
     const editorRef = useRef(null)
     const wsRef = useRef(null)
+    const [awaitingResponse, setAwaitingResponse] = React.useState(false)
 
     useEffect(() => {
         const editor = document.getElementById('editor-input')
-        const preview = document.getElementById('editor-preview')
+        const editorConsole = document.getElementById('console')
 
         if(!editorRef.current) {
             editorRef.current = monaco.editor.create(editor, {
@@ -19,31 +20,55 @@ function WebIDE({language, baseCode}) {
             })
         }
 
+        /*
         if(!wsRef.current) {
-            wsRef.current = new WebSocket('ws://pycourses.onrender.com')
+            wsRef.current = new WebSocket('ws://localhost:3000')
             wsRef.current.onopen = () => {
                 console.log('Connected to server')
             }
-        }
 
-        wsRef.current.onmessage = (message) => {
-            const data = JSON.parse(message.data)
-            if(data.type === 'output'){
-                console.log('Output: ', data.output)
+            wsRef.current.onmessage = (message) => {
+                setAwaitingResponse(false)
+                const data = JSON.parse(message.data)
+                if (data.type === 'error'){
+                    console.error("Error: ", data.error)
+                    alert("Error: " + data.error)
+                } else {
+                    console.log(data)
+                    let output = data.output.split('\n')[0]
+                    console.log("Output: ", output)
+                    editorConsole.srcdoc = output
+                }
             }
         }
+
+         */
 
         return () => {
             if(editorRef.current) {
                 editorRef.current.dispose()
                 editorRef.current = null
             }
+            if(wsRef.current) {
+                wsRef.current.close()
+                wsRef.current = null
+            }
         }
-    })
+    }, [])
 
     function runCode(){
         const code = editorRef.current.getValue()
-        wsRef.current.send(JSON.stringify({ type: 'execute', language, code }))
+        if(awaitingResponse === false) {
+            setAwaitingResponse(true)
+            if(wsRef.current) {
+                wsRef.current.send(JSON.stringify({language, code, input: null}))
+            }else{
+                alert("Server not connected")
+            }
+        }
+        else {
+            alert("Please wait for the previous code to finish executing")
+        }
     }
 
     async function executePython() {
@@ -63,12 +88,14 @@ function WebIDE({language, baseCode}) {
         })
 
         const result = await response.json()
+        const editorConsole = document.getElementById('console')
         if(result.error) {
-            console.error("Error: ", result.error)
-            alert("Error: " + result.error)
+            console.log("Error: ", result.error)
+            editorConsole.srcdoc = result.error
         }else{
-            console.log("Output: ", result.output)
-            alert("Output: " + result.output)
+            let output = result.output.split('\n')[0]
+            console.log("Output: ", output)
+            editorConsole.srcdoc = output
         }
     }
 
@@ -76,12 +103,12 @@ function WebIDE({language, baseCode}) {
       <div className={"IDE"}>
           <div className={"editor"}>
               <label>Python</label>
-              <button onClick={runCode}>Run</button>
+              <button onClick={executePython}>Run</button>
               <div id={"editor-input"}></div>
           </div>
           <div className={"output"}>
               <label>Output</label>
-              <iframe id={"editor-preview"}></iframe>
+              <iframe id={'console'}></iframe>
           </div>
       </div>
 

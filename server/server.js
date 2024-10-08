@@ -66,6 +66,7 @@ async function runCodeInDocker(langauge, code, input) {
         }
 
     } catch (error){
+        console.error(error.message)
         throw new Error(`Execution failed: ${error.message}`)
     } finally {
         if(container) {

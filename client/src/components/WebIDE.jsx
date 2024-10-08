@@ -20,9 +20,9 @@ function WebIDE({language, baseCode}) {
             })
         }
 
-        /*
+
         if(!wsRef.current) {
-            wsRef.current = new WebSocket('ws://localhost:3000')
+            wsRef.current = new WebSocket('wss://pycourses.onrender.com/')
             wsRef.current.onopen = () => {
                 console.log('Connected to server')
             }
@@ -31,18 +31,16 @@ function WebIDE({language, baseCode}) {
                 setAwaitingResponse(false)
                 const data = JSON.parse(message.data)
                 if (data.type === 'error'){
-                    console.error("Error: ", data.error)
-                    alert("Error: " + data.error)
+                    console.error("Error: ", data)
+                    editorConsole.srcdoc = data.error
                 } else {
                     console.log(data)
                     let output = data.output.split('\n')[0]
-                    console.log("Output: ", output)
                     editorConsole.srcdoc = output
                 }
             }
         }
 
-         */
 
         return () => {
             if(editorRef.current) {
@@ -103,7 +101,7 @@ function WebIDE({language, baseCode}) {
       <div className={"IDE"}>
           <div className={"editor"}>
               <label>Python</label>
-              <button onClick={executePython}>Run</button>
+              <button onClick={runCode}>Run</button>
               <div id={"editor-input"}></div>
           </div>
           <div className={"output"}>

@@ -21,8 +21,11 @@ function Intro_to_Python() {
             variables: {
                 title: "Variables",
                 description: "Lets start learning Python with the basics",
-                details: "Write a program that prints 'Hello World!'",
-                baseCode: "print('Hello World!')",
+                details: "A variable is a named storage location that contains a certain value."+
+                " As the name suggests, the value can change (Unlike a constant which we will look at later)" +
+                "Let's try and use a variable to store 'Hello World' and print it out. Change the code so that it prints out 'Hello World'",
+                baseCode: "my_string = 'This is an example'" +
+                "print(my_string)",
                 url: "variables",
                 previousTask: "Hello World",
                 previousTaskURL: "hello_world",
@@ -32,8 +35,15 @@ function Intro_to_Python() {
             variable_types: {
                 title: "Variable Types",
                 description: "Lets start learning Python with the basics",
-                details: "Write a program that prints 'Hello World!'",
-                baseCode: "print('Hello World!')",
+                details: "In python, variables can store different types of data, and every type has unique characteristics. Some common ones inlcude:"+
+                "int: Integer" +
+                "float: Real numbers"+
+                "double: Also stores real numbers, but much more accurate"+
+                "str: A String of characters"+
+                "bool: True or False values"+ 
+                "Let's say we have a variable distance = 4.3. To find the data type of a variable, you can use type(distance), which should output 'float'"+
+                "Now that you have an idea of what data types are, try and make your own variable that stores an Integer. Then output the variable and its type. We've started off the code for you",
+                baseCode: "my_variable = 12",
                 url: "variable_types",
                 previousTask: "Variables",
                 previousTaskURL: "variables",

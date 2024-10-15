@@ -1,20 +1,18 @@
-# Use the official Node.js image as the base image
-FROM node:16
+# Use an appropriate base image
+FROM python:3.8 AS python
+FROM node:16 AS node
 
-# Set the working directory
-WORKDIR /usr/src/app
+# Create a working directory
+WORKDIR /app
 
-# Copy package.json and package-lock.json to install dependencies
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code
+# Copy application code
 COPY . .
 
-# Expose the port that your server will run on
+# Install any necessary dependencies for Node.js
+RUN npm install
+
+# Expose a port
 EXPOSE 3000
 
-# Command to run your application
+# Start your Node.js application
 CMD ["node", "server.js"]

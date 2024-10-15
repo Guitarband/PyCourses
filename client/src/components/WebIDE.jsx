@@ -22,7 +22,7 @@ function WebIDE({language, baseCode}) {
 
 
         if(!wsRef.current) {
-            wsRef.current = new WebSocket('ws://localhost:3000/')
+            wsRef.current = new WebSocket('wss://pycourses.onrender.com/')
             wsRef.current.onopen = () => {
                 console.log('Connected to server')
             }

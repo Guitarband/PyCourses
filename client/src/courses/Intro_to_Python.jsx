@@ -70,20 +70,24 @@ function Intro_to_Python() {
     return (
       <div className={"Course"}>
           <Routes>
-              <Route path={"/"} element={<h2 id={"courseTitle"}>{courseData.name}</h2>}/>
+              <Route path={"/"} element={
+                  <>
+                      <h2 id={"courseTitle"}>{courseData.name}</h2>
+                      <div className={'taskMap'}>
+                          {Object.entries(courseData.tasks).map(([key, task]) => (
+                            <div key={key} className={"taskSlot"}>
+                                <a href={`/course/${courseData.url}/${task.url}`}>{task.title}</a>
+                                <p className={"taskDescription"}>{task.description}</p>
+                            </div>
+                          ))}
+                      </div>
+                  </>
+              }/>
               {Object.entries(courseData.tasks).map(([key, task]) => (
                 <Route key={key} path={'/'+task.url} element={<Content courseTitle={courseData.name} courseURL={courseData.url} task={task}/>}/>
               ))}
           </Routes>
           <Outlet />
-          <div className={'taskMap'}>
-              {Object.entries(courseData.tasks).map(([key, task]) => (
-                <div key={key} className={"taskSlot"}>
-                    <a href={`/course/${courseData.url}/${task.url}`}>{task.title}</a>
-                    <p className={"taskDescription"}>{task.description}</p>
-                </div>
-              ))}
-          </div>
       </div>
     )
 }

@@ -22,7 +22,7 @@ function WebIDE({language, baseCode}) {
 
 
         if(!wsRef.current) {
-            wsRef.current = new WebSocket('wss://pycourses.onrender.com/')
+            wsRef.current = new WebSocket('ws://localhost:3000/')
             wsRef.current.onopen = () => {
                 console.log('Connected to server')
             }
@@ -101,7 +101,7 @@ function WebIDE({language, baseCode}) {
       <div className={"IDE"}>
           <div className={"editor"}>
               <label>Python</label>
-              <button id={"runButton"} onClick={executePython}>Run</button>
+              <button id={"runButton"} onClick={runCode}>Run</button>
               <div id={"editor-input"}></div>
           </div>
           <div className={"output"}>

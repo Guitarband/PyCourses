@@ -20,6 +20,7 @@ function WebIDE({language, baseCode}) {
             })
         }
 
+        /*
 
         if(!wsRef.current) {
             wsRef.current = new WebSocket('wss://pycourses.onrender.com/')
@@ -41,19 +42,25 @@ function WebIDE({language, baseCode}) {
             }
         }
 
+         */
+
 
         return () => {
             if(editorRef.current) {
                 editorRef.current.dispose()
                 editorRef.current = null
             }
+            /*
             if(wsRef.current) {
                 wsRef.current.close()
                 wsRef.current = null
             }
+
+             */
         }
     }, [])
 
+    /*
     function runCode(){
         const code = editorRef.current.getValue()
         if(awaitingResponse === false) {
@@ -68,6 +75,8 @@ function WebIDE({language, baseCode}) {
             alert("Please wait for the previous code to finish executing")
         }
     }
+
+     */
 
     async function executePython() {
         let code = editorRef.current.getValue()

@@ -1,22 +1,166 @@
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
 * {
   box-sizing: border-box;
 }
 
 #root {
   max-width: 100vw;
+  width: 100%;
   height: 100vh;
   margin: 0;
   padding: 0;
   text-align: center;
 }
 
-.App, .Course{
-  width: 100vw;
+.App{
+  width: 100%;
+  max-width: 100vw;
   height: 100vh;
+  margin: 0;
+}
+
+.Home{
+  width: 100%;
+  height: 300vh;
+  margin: 0 auto;
+}
+
+.Course{
+  width: 100%;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+.navbar {
+  border: 1px solid black;
+  border-top: none;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 4vh 11vw 4vh 8vw;
+  margin: 0 5vw;
+  background-color: #e6e6d5;
+  z-index: 1000;
+}
+
+.nav-list{
+  list-style-type: none;
+  margin: 0;
+  padding: 0 4vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-list li{
+  margin-left: 20px;
+}
+
+.nav-list a, .nav-list a:visited, .nav-list a:hover, .nav-list a:active{
+  text-decoration: white;
+  color:black;
+  font-size: 1em;
+}
+
+#navbarMid{
+  font-size: 1.4em;
+}
+
+#navbarNextToMid{
+  font-size: 1.2em;
+}
+
+.homeTitle{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 1.6em;
+}
+
+.hero{
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid black;
+  border-radius: 20px;
+  background-color: #e6e6d5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20vh 3vw 20vh 3vw;
+  margin: 20vh 2vw 2vw 2vw;
+}
+
+#heroButton, #heroButton:hover{
+  padding: 20px 60px;
+  outline: none;
+  border: none;
+  font-size: 1.2em;
+}
+
+#heroButton a, #heroButton a:visited, #heroButton a:hover, #heroButton a:active{
+  color: white;
+  text-decoration: none;
+}
+
+.about, .content, .playground{
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  padding: 5vh 2vw;
+  margin: 0 auto;
+  gap: 4vw;
+}
+
+.aboutText, .courseText, .problemsText, .ideText{
+  min-height: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  background-color: #e6e6d5;
+  border: 1px solid black;
+  border-radius: 20px;
+  flex: 1;
+  padding: 2vh 2vw;
+  text-align: left;
+}
+
+.aboutImage{
+  border: 0 solid black;
+  border-radius: 20px;
+  flex: 2;
+  padding: 2vh 2vw;
+}
+
+.reveal {
+  flex: 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1.6s ease, visibility 1.2s ease;
+}
+
+.reveal.active{
+  opacity: 1;
+  visibility: visible;
+}
+
+.titleText{
+  font-size: 1.8em;
+  font-weight: bold;
+  margin: 10px 0;
 }
 
 .taskMap{
-  padding: 5vh 10vw;
+  padding: 5vw 10vh;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;

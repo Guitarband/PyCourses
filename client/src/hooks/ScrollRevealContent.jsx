@@ -13,7 +13,7 @@ const ScrollRevealContent = ({ children }) => {
                 setIsVisible(false)
               }
           },
-          { threshold: 0.3 }
+          { threshold: 0.2 }
         );
 
         if (ref.current) {

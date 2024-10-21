@@ -15,12 +15,12 @@ function Intro_to_Python() {
                 baseCode: "",
                 expectedOutput: "Hello World!",
                 url: "hello_world",
-                nextTask: "Hello World 2",
-                nextTaskURL: "hello_world2"
+                nextTask: "Variables",
+                nextTaskURL: "variables"
             },
             variables: {
                 title: "Variables",
-                description: "Lets start learning Python with the basics",
+                description: "Here you'll learn the most important aspect of coding, how to store values",
                 details: "A variable is a named storage location that contains a certain value."+
                 " As the name suggests, the value can change (Unlike a constant which we will look at later)" +
                 "Let's try and use a variable to store 'Hello World' and print it out. Change the code so that it prints out 'Hello World'",
@@ -34,7 +34,7 @@ function Intro_to_Python() {
             },
             variable_types: {
                 title: "Variable Types",
-                description: "Lets start learning Python with the basics",
+                description: "A variable can have many different types. Let's explore a few of them.",
                 details: "In python, variables can store different types of data, and every type has unique characteristics. Some common ones inlcude:"+
                 "int: Integer" +
                 "float: Real numbers"+
@@ -47,8 +47,8 @@ function Intro_to_Python() {
                 url: "variable_types",
                 previousTask: "Variables",
                 previousTaskURL: "variables",
-                nextTask: "Make a Triangle",
-                nextTaskURL: "make_a_triangle"
+                nextTask: "For Loops",
+                nextTaskURL: "for_loops"
             },
             for_loops: {
                 title: "For Loops",
@@ -73,6 +73,10 @@ function Intro_to_Python() {
                 previousTaskURL: "for_loops",
                 nextTask: "test",
                 nextTaskURL: "test"
+            },
+            conditional_statements: {
+                title: "Conditional Statements",
+                description: ""
             }
         }
     }

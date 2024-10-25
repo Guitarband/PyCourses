@@ -52,10 +52,12 @@ function Intro_to_Python() {
             },
             for_loops: {
                 title: "For Loops",
-                description: "Now that we've learned how to use for loops, let's make use of this to print a triangle.",
-                details: " In python we have the ability to multiply strings. For example 'a' * 3 would return 'aaa'." +
-                  " Using this knowledge, write a program that prints a triangle of height 5.",
-                baseCode: "print('*' * 5) # This will print a line of 5 asterisks",
+                description: "Coding is meant to make our lives easier. Let's find out one of the best ways to do that",
+                details: " Let's say we wanted to print 'Hello World!' 15 times. It would be laborious to write 'print('Hello World')' 15 times."+
+                "Instead we can use what's known as a for loop. This allows us to execute specified lines of code multiple times. By specifying a range" +
+                "we tell the code hwo many times to loop over our code. The code provided to you will print 'racecar' 5 times. Change it to print 15 times instead",
+                baseCode: "for i in range(5):" + "\n" + 
+                "   print('racecar')",
                 url: "for_loops",
                 previousTask: "Variables",
                 previousTaskURL: "variables",
@@ -64,9 +66,9 @@ function Intro_to_Python() {
             },
             make_a_triangle: {
                 title: "Make a Triangle",
-                description: "Now that we've learned how to use for loops, let's make use of this to print a triangle.",
+                description: "Now that we've learned how to use for loops, let's make use of this to print out a triangle.",
                 details: " In python we have the ability to multiply strings. For example 'a' * 3 would return 'aaa'." +
-                  " Using this knowledge, write a program that prints a triangle of height 5.",
+                  " Using this knowledge, write a program that prints a right triangle of height 5. (1 asterisk in the first row, 2 in the second etc.)",
                 baseCode: "print('*' * 5) # This will print a line of 5 asterisks",
                 url: "make_a_triangle",
                 previousTask: "For Loops",
@@ -76,7 +78,38 @@ function Intro_to_Python() {
             },
             conditional_statements: {
                 title: "Conditional Statements",
-                description: ""
+                description: "How do we make our code condition based? Lets take a look",
+                details: "When coding, we may want to execute different lines of code based on a condition. An example would be turning on an air conditoner at a certain temperature"+
+                "i.e if the temperature is greater than 25 turn on the AC. In python this is achieved by using an 'if statement'. The code shown"+
+                "will illustrate how the above example can be achieved in code. Try poking around and change the condition so that the AC turns off when the temperature is below 20",
+                baseCode: "temp = 30" + "\n" +
+                "if (temp > 25):" + "\n" +
+                "   print('Turn on AC')",
+                previousTask: "Make a Triangle",
+                previousTaskURL: "make_a_triangle",
+                nextTask: "Conditional Statements 2",
+                nextTaskURL: "conditional_statements_2"
+            },
+            conditional_statements_2: {
+                title: "Conditional Statements: Part 2",
+                description: "We have more control over conditional Statements than you think",
+                details: "Let's take a look at our previous example where we wanted the Ac to turn on when the temperature is greater than 25. The task asked you to turn off the AC" +
+                "when the temperature is below 20. A neat characterisitic of the 'if' statement is the 'else' statement. This allows to to execute lines in the case where our condition was not fullfilled."+
+                "So, it would look like: " + "\n" +
+                "if (temp > 25):" + "\n" +
+                "   print('Turn on AC')" + "\n" +
+                "else:" + "\n" +
+                "   print('Turn off AC')" + "\n" +
+                "This code will turn on the AC when the temperature is above 25, otherwise it will turn the AC off. We also have the ability to add another if statement in front of the else keyword. Try and make if so that " +
+                "The AC turns on when the temperature is above 25, and so that a heater turns on when the temperature is below 20.",
+                baseCode: "if (temp > 25):" + "\n" +
+                "   print('Turn on AC')" + "\n" +
+                "else:" + "\n" +
+                "   print('Turn off AC')",
+                previousTask: "Conditional Statements",
+                previousTaskURL: "conditional_statements"
+
+
             }
         }
     }

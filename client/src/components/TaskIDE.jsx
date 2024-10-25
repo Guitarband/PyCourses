@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react'
 import * as monaco from 'monaco-editor'
-import '../styles/TaskIDE.css'
+import '../styles/taskIDE.css'
 
 function TaskIDE({language, baseCode}) {
     const editorRef = useRef(null)

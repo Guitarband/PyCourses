@@ -2,8 +2,10 @@ import React from "react";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import './App.css'
 import Home from "./pages/Home.jsx";
-import Intro_to_Python from "./courses/Intro_to_Python.jsx";
 import NavBar from "./components/NavBar.jsx";
+import Contact from "./pages/Contact.jsx";
+import Courses from "./pages/Courses.jsx";
+import PageNotFound from "./pages/PageNotFound.jsx";
 
 function App() {
   return (
@@ -16,7 +18,18 @@ function App() {
                         <Home />
                     </>
                 }/>
-                <Route path="/course/intro_to_python/*" element={<Intro_to_Python />}/>
+                <Route path={"/courses/*"} element={
+                    <>
+                        <Courses />
+                    </>
+                }/>
+                <Route path={"/contact"} element={
+                    <>
+                    <NavBar />
+                    <Contact />
+                    </>
+                }/>
+                <Route path={"*"} element={<PageNotFound />} />
             </Routes>
         </div>
     </Router>

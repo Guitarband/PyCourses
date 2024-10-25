@@ -1,3 +1,4 @@
+import "../styles/navBar.css"
 
 function NavBar() {
     return (
@@ -14,7 +15,7 @@ function NavBar() {
                         <a id={"navbarMid"} href={"/"}>PyCourses</a>
                     </li>
                     <li>
-                        <a id={"navbarNextToMid"} href={"/ide"}>Playground</a>
+                        <a id={"navbarNextToMid"} href={"/playground"}>Playground</a>
                     </li>
                     <li>
                         <a href={"/contact"}>Contact</a>

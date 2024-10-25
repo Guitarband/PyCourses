@@ -1,0 +1,112 @@
+.Home{
+    width: 100%;
+    margin: 0 auto;
+}
+
+.homeTitle{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 1.6em;
+}
+
+.hero{
+    border: 2px solid black;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    background-color: #EAE6D2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20vh 3vw 20vh 3vw;
+    margin: 8vh 2vw 6vw 2vw;
+}
+
+#heroButton, #heroButton:hover{
+    padding: 20px 60px;
+    outline: none;
+    border: none;
+    font-size: 1.2em;
+}
+
+#heroButton a, #heroButton a:visited, #heroButton a:hover, #heroButton a:active{
+    color: white;
+    text-decoration: none;
+}
+
+.content{
+    background-color: #B2E0E0;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+.aboutText {
+    background-color: #E0F7F5;
+}
+
+.courseText {
+    background-color: #E6F8F7;
+}
+
+.problemsText {
+    background-color: #E4F5F5;
+}
+
+.ideText {
+    background-color: #F1F8F8;
+}
+
+.aboutText, .courseText, .problemsText, .ideText {
+    min-height: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid black;
+    border-radius: 20px;
+    flex: 1;
+    padding: 3vh 3vw;
+    text-align: left;
+    font-size: 1.1em;
+    color: #2C3E50;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.aboutText:hover, .courseText:hover, .problemsText:hover, .ideText:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.reveal {
+    flex: 1;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.6s ease, visibility 1.2s ease;
+}
+
+.reveal.active{
+    opacity: 1;
+    visibility: visible;
+}
+
+.carousel{
+    padding: 10vh 2vw;
+    display: grid;
+    grid-template-columns: repeat(4, 40vw);
+    grid-template-rows: 1fr;
+    grid-column-gap: 3rem;
+    grid-row-gap: 1rem;
+    overflow: scroll;
+    scroll-snap-type: both mandatory;
+    scroll-padding: 1rem;
+    scrollbar-width: none;
+    margin: 0;
+}
+
+.titleText{
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.contactDirect{
+    padding: 6vw 5vh;
+    background-color: #FFF3E0;
+}

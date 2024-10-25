@@ -1,6 +1,8 @@
 import React from "react";
 import { Routes, Route, Outlet} from "react-router-dom";
-import Content from "../pages/Content.jsx";
+import TaskContent from "../pages/TaskContent.jsx";
+import "../styles/courseTasks.css";
+import NavBar from "../components/NavBar.jsx";
 
 function Intro_to_Python() {
     const courseData = {
@@ -82,11 +84,12 @@ function Intro_to_Python() {
           <Routes>
               <Route path={"/"} element={
                   <>
+                      <NavBar />
                       <h2 id={"courseTitle"}>{courseData.name}</h2>
                       <div className={'taskMap'}>
                           {Object.entries(courseData.tasks).map(([key, task]) => (
                             <div key={key} className={"taskSlot"}>
-                                <a href={`/course/${courseData.url}/${task.url}`}>{task.title}</a>
+                                <a href={`/courses/${courseData.url}/${task.url}`}>{task.title}</a>
                                 <p className={"taskDescription"}>{task.description}</p>
                             </div>
                           ))}
@@ -94,7 +97,7 @@ function Intro_to_Python() {
                   </>
               }/>
               {Object.entries(courseData.tasks).map(([key, task]) => (
-                <Route key={key} path={'/'+task.url} element={<Content courseTitle={courseData.name} courseURL={courseData.url} task={task}/>}/>
+                <Route key={key} path={'/'+task.url} element={<TaskContent courseURL={courseData.url} task={task}/>}/>
               ))}
           </Routes>
           <Outlet />

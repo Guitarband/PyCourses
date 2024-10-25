@@ -1,5 +1,7 @@
 import {useState, useEffect} from "react";
 import ScrollRevealContent from "../hooks/ScrollRevealContent.jsx";
+import "../styles/home.css";
+import Footer from "../components/Footer.jsx";
 
 function Home() {
     const colours = [
@@ -40,34 +42,6 @@ function Home() {
 
         return () => clearInterval(typingInterval)
     }, [currentText, isDeleting, colorIndex])
-
-    const SubmitContact = async (event) => {
-        event.preventDefault();
-        const form = event.target;
-
-        try {
-            const response = await fetch("https://contactformreceiver.azurewebsites.net/api/sendEmail?", {
-                method: 'POST',
-                body: JSON.stringify({
-                    name: form.name.value,
-                    email: form.email.value,
-                    message: form.message.value,
-                }),
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                alert("Message sent successfully!");
-                console.log("Success:", result);
-            } else {
-                console.error("Error:", response.statusText);
-            }
-        } catch (error) {
-            console.error("Fetch error:", error);
-        }
-
-
-    }
 
     return(
       <div className={"Home"}>
@@ -146,33 +120,16 @@ function Home() {
               </ScrollRevealContent>
           </ul>
           <ScrollRevealContent>
-              <section className={"contact"}>
-                  <div id={"contactForm"}>
-                      <h2>Contact us via this form</h2>
-                      <form onSubmit={SubmitContact} method={'POST'}>
-                          <div className="form-group">
-                              <label htmlFor="name">Name</label>
-                              <input type="text" id="name" name="name" placeholder={"Jane Doe"} required/>
-                          </div>
-                          <div className="form-group">
-                              <label htmlFor="email">Email</label>
-                              <input type="email" id="email" name="email" placeholder={"jan3d0e@gmail.com"} required/>
-                          </div>
-                          <div className="form-group">
-                              <label htmlFor="message">Message</label>
-                              <textarea id="message" name="message" rows="4" placeholder={"I wanted to reach out in regards to..."} required></textarea>
-                          </div>
-                          <div className="form-group">
-                              <button type="submit">Send Message</button>
-                          </div>
-                      </form>
-                  </div>
-                  <div className="divider"></div>
-                  <div className={"socials"}>
-                      <h2>Or reach out to us directly!</h2>
-                  </div>
+              <section className={"contactDirect"}>
+                  <h2>If you have any issues or queries, visit the contact page here</h2>
+                  <a href={"/contact"}>
+                      <button id={"contactButton"} style={{background: currentColour}}>
+                          Contact us
+                      </button>
+                  </a>
               </section>
           </ScrollRevealContent>
+          <Footer />
       </div>
     )
 }

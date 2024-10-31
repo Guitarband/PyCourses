@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from 'react'
 import * as monaco from 'monaco-editor'
 import '../styles/taskIDE.css'
 
-function TaskIDE({language, baseCode}) {
+function TaskIDE({language, baseCode, fileSystem}) {
     const editorRef = useRef(null)
     const [runtime, setRuntime] = useState(null)
     const [editorConsole, setEditorConsole] = useState(null)
@@ -48,18 +48,27 @@ function TaskIDE({language, baseCode}) {
                     });
                 });
                 setRuntime(pyodideInstance);
+                console.log("Runtime loaded");
             }
         };
 
         loadRuntime();
 
         return () => {
-            if(editorRef.current) {
+            if(editorRef.current !== null) {
+                const cleanUpPyodide = async () => {
+                    for(const filename of Object.keys(files)){
+                        await runtime.runPythonAsync(`import os\nos.remove('${filename}')`)
+                    }
+                }
+
+                cleanUpPyodide()
+
                 editorRef.current.dispose()
                 editorRef.current = null
             }
         }
-    }, [files, currentFile, language])
+    })
 
 
     function runCode(){
@@ -67,33 +76,47 @@ function TaskIDE({language, baseCode}) {
             alert(`Error loading ${language} runtime environment, Please refresh the page and try again`)
             return
         }
+
+        saveFile()
+        setRuntimeOutput([])
+
         switch (language) {
             case 'python':
                 executePython()
                 break
             default:
                 alert(`Language ${language} not supported`)
-                editorConsole.srcdoc = `<pre style="color: red;">Execution for ${language} is not supported yet.</pre>`;
+                setRuntimeOutput(["Language not supported"])
         }
     }
 
     async function executePython() {
-        try{
-            setRuntimeOutput([])
+        const loadFile = async (filename, fileContent) => {
+            await runtime.runPythonAsync(
+              `with open('${filename}','w') as f:
+    f.write(${JSON.stringify(fileContent)})`
+            )
+        }
 
+        try{
             for(const [filename, fileContent] of Object.entries(files)){
                 if(filename !== "main.py" && fileContent.trim()) {
-                    console.log(filename)
-                    await runtime.runPythonAsync(
-                      `exec(${JSON.stringify(fileContent)})`
-                    )
+                    if(filename === currentFile) {
+                        loadFile(filename, editorRef.current.getValue())
+                    }else {
+                        loadFile(filename, fileContent)
+                    }
                 }
             }
 
-            await runtime.runPythonAsync(files['main.py'])
+            if(currentFile !== "main.py") {
+                await runtime.runPythonAsync(files['main.py'])
+            }else{
+                await runtime.runPythonAsync(editorRef.current.getValue())
+            }
         }catch (error) {
             console.log("Error: ", error);
-            editorConsole.srcdoc = `<pre style="color: red;">${error}</pre>`;
+            setRuntimeOutput(prev => [...prev, error.toString()]);
         }
     }
 
@@ -127,13 +150,16 @@ function TaskIDE({language, baseCode}) {
     }
 
     const switchFile = (fileName) => {
+        saveFile()
+        setCurrentFile(fileName);
+        editorRef.current.setValue(files[fileName] || "");
+    }
+
+    const saveFile = () => {
         setFiles(prevFiles => ({
             ...prevFiles,
             [currentFile]: editorRef.current.getValue(),
-        }));
-        console.log(files)
-        setCurrentFile(fileName);
-        editorRef.current.setValue(files[fileName] || "");
+        }))
     }
 
     return(
@@ -141,32 +167,44 @@ function TaskIDE({language, baseCode}) {
           <div className={"editor"}>
               <div
                 style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px"}}>
-                  <div id={"fileSelectArea"}>
-                      <label id={"fileSelectText"}>File:</label>
-                      <select id={"fileSelect"} value={currentFile} onChange={
-                          (e) => {
-                              if (e.target.value === "new") {
-                                  createFile();
-                              } else {
-                                  switchFile(e.target.value);
-                              }
-                          }
-                      }>
-                          {Object.keys(files).map(file => (
-                            <option key={file} value={file}>{file}</option>
-                          ))}
-                          <option value={"new"}>New File</option>
-                      </select>
-                  </div>
-                  <div>
-                      <button onClick={deleteFile}>Delete File</button>
-                      <button id={"runButton"} onClick={runCode}>Run</button>
-                  </div>
+                  {fileSystem ?
+                    <>
+                        <div id={"fileSelectArea"}>
+                            <label id={"fileSelectText"}>File:</label>
+                            <select id={"fileSelect"} value={currentFile} onChange={
+                                (e) => {
+                                    if (e.target.value === "new") {
+                                        createFile();
+                                    } else {
+                                        switchFile(e.target.value);
+                                    }
+                                }
+                            }>
+                                {Object.keys(files).map(file => (
+                                  <option key={file} value={file}>{file}</option>
+                                ))}
+                                <option value={"new"}>New File</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button id={"deleteButton"} onClick={deleteFile}>Delete File</button>
+                            <button id={"runButton"} onClick={runCode}>Run</button>
+                        </div>
+                    </>
+                    :
+                    <>
+                        <h3>{language[0].toUpperCase() + language.slice(1)} Editor</h3>
+                        <div>
+                            <button id={"deleteButton"} onClick={deleteFile}>Delete File</button>
+                            <button id={"runButton"} onClick={runCode}>Run</button>
+                        </div>
+                    </>
+                  }
               </div>
               <div id={"editor-input"}></div>
           </div>
           <div className={"output"}>
-          <label>Output</label>
+              <label>Output</label>
               <pre id={"console"} style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word'}}>
                     {runtimeOutput.join('\n')}
                 </pre>

@@ -4,12 +4,12 @@ const courses = {
         description: "An introduction to Python programming",
         url: "intro_to_python",
         language: "Python",
-        fileSystemEnabled: false,
         tasks: {
             hello_world: {
                 title: "Hello World",
                 description: "Lets start learning Python with the basics",
                 details: "Write a program that prints 'Hello World!'",
+                fileSystemEnabled: false,
                 baseCode: "",
                 expectedOutput: "Hello World!",
                 url: "hello_world",
@@ -22,6 +22,7 @@ const courses = {
                 details: "A variable is a named storage location that contains a certain value."+
                   " As the name suggests, the value can change (Unlike a constant which we will look at later)" +
                   "Let's try and use a variable to store 'Hello World' and print it out. Change the code so that it prints out 'Hello World'",
+                fileSystemEnabled: false,
                 baseCode: "my_string = 'This is an example'\n" +
                   "print(my_string)",
                 expectedOutput: "Hello World",
@@ -42,6 +43,7 @@ const courses = {
                   "bool: True or False values"+
                   "Let's say we have a variable distance = 4.3. To find the data type of a variable, you can use type(distance), which should output 'float'"+
                   "Now that you have an idea of what data types are, try and make your own variable that stores an Integer. Then output the variable and its type. We've started off the code for you",
+                fileSystemEnabled: false,
                 baseCode: "my_variable = 12",
                 url: "variable_types",
                 previousTask: "Variables",
@@ -55,6 +57,7 @@ const courses = {
                 details: " Let's say we wanted to print 'Hello World!' 15 times. It would be laborious to write 'print('Hello World')' 15 times."+
                   "Instead we can use what's known as a for loop. This allows us to execute specified lines of code multiple times. By specifying a range" +
                   "we tell the code hwo many times to loop over our code. The code provided to you will print 'racecar' 5 times. Change it to print 15 times instead",
+                fileSystemEnabled: false,
                 baseCode: "for i in range(5):" + "\n" +
                   "   print('racecar')",
                 url: "for_loops",
@@ -68,6 +71,7 @@ const courses = {
                 description: "Now that we've learned how to use for loops, let's make use of this to print out a triangle.",
                 details: " In python we have the ability to multiply strings. For example 'a' * 3 would return 'aaa'." +
                   " Using this knowledge, write a program that prints a right triangle of height 5. (1 asterisk in the first row, 2 in the second etc.)",
+                fileSystemEnabled: false,
                 baseCode: "print('*' * 5) # This will print a line of 5 asterisks",
                 url: "make_a_triangle",
                 previousTask: "For Loops",
@@ -81,6 +85,7 @@ const courses = {
                 details: "When coding, we may want to execute different lines of code based on a condition. An example would be turning on an air conditoner at a certain temperature"+
                   "i.e if the temperature is greater than 25 turn on the AC. In python this is achieved by using an 'if statement'. The code shown"+
                   "will illustrate how the above example can be achieved in code. Try poking around and change the condition so that the AC turns off when the temperature is below 20",
+                fileSystemEnabled: false,
                 baseCode: "temp = 30" + "\n" +
                   "if (temp > 25):" + "\n" +
                   "   print('Turn on AC')",
@@ -101,6 +106,7 @@ const courses = {
                   "   print('Turn off AC')" + "\n" +
                   "This code will turn on the AC when the temperature is above 25, otherwise it will turn the AC off. We also have the ability to add another if statement in front of the else keyword. Try and make if so that " +
                   "The AC turns on when the temperature is above 25, and so that a heater turns on when the temperature is below 20.",
+                fileSystemEnabled: false,
                 baseCode: "if (temp > 25):" + "\n" +
                   "   print('Turn on AC')" + "\n" +
                   "else:" + "\n" +

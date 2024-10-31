@@ -10,6 +10,8 @@
 #fileSelectArea{
     display: flex;
     flex-direction: row;
+    border: none;
+    border-radius: 8px;
 }
 
 #fileSelectText{
@@ -57,13 +59,33 @@
     text-align: left;
 }
 
+#deleteButton{
+    background-color: transparent;
+    color: #ff0000;
+    border: 2px solid #ff0000;
+}
+
+#deleteButton:hover{
+    padding: 10px 20px;
+    background-color: #ff0000;
+    color: white;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
 #runButton{
     margin-top: 10px;
+    background-color: transparent;
+    color: #008000;
+    border: 2px solid #008000;
+    cursor: pointer;
+}
+
+#runButton:hover{
     padding: 10px 20px;
     background-color: #008000;
     color: white;
-    border: none;
-    border-radius: 5px;
+    border: 1px solid transparent;
     cursor: pointer;
 }
 

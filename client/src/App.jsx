@@ -6,7 +6,7 @@ import NavBar from "./components/NavBar.jsx";
 import Contact from "./pages/Contact.jsx";
 import Courses from "./pages/Courses.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
-import ErrorBoundary from "./ErrorBoundary.jsx";
+import ErrorBoundary from "./pages/ErrorBoundary.jsx";
 
 function App() {
   return (

@@ -8,6 +8,8 @@ function TaskIDE({language, baseCode}) {
     const [editorConsole, setEditorConsole] = useState(null)
     const [runtimeOutput, setRuntimeOutput] = useState([])
     const [inputValue, setInputValue] = useState("");
+    const [files, setFiles] = useState({'main.py': baseCode})
+    const [currentFile, setCurrentFile] = useState('main.py')
 
     useEffect(() => {
         const editor = document.getElementById('editor-input')
@@ -15,7 +17,7 @@ function TaskIDE({language, baseCode}) {
 
         if(!editorRef.current) {
             editorRef.current = monaco.editor.create(editor, {
-                value: baseCode,
+                value: files[currentFile],
                 language,
                 automaticLayout: true,
                 readOnly: false,
@@ -57,18 +59,17 @@ function TaskIDE({language, baseCode}) {
                 editorRef.current = null
             }
         }
-    }, [])
+    }, [files, currentFile, language])
 
 
     function runCode(){
-        const code = editorRef.current.getValue()
         if(!runtime){
             alert(`Error loading ${language} runtime environment, Please refresh the page and try again`)
             return
         }
         switch (language) {
             case 'python':
-                executePython(code)
+                executePython()
                 break
             default:
                 alert(`Language ${language} not supported`)
@@ -76,27 +77,96 @@ function TaskIDE({language, baseCode}) {
         }
     }
 
-    async function executePython(code) {
+    async function executePython() {
         try{
             setRuntimeOutput([])
-            runtime.runPythonAsync(code)
+
+            for(const [filename, fileContent] of Object.entries(files)){
+                if(filename !== "main.py" && fileContent.trim()) {
+                    console.log(filename)
+                    await runtime.runPythonAsync(
+                      `exec(${JSON.stringify(fileContent)})`
+                    )
+                }
+            }
+
+            await runtime.runPythonAsync(files['main.py'])
         }catch (error) {
             console.log("Error: ", error);
             editorConsole.srcdoc = `<pre style="color: red;">${error}</pre>`;
         }
     }
 
+    const createFile = () => {
+        const fileName = prompt("Create a new file. Please specify file extension:");
+        if (fileName && !files[fileName]) {
+            setFiles((prevFiles) => ({
+                ...prevFiles,
+                [fileName]: "",
+            }));
+            setCurrentFile(fileName);
+            editorRef.current.setValue("");
+        } else if (files[fileName]) {
+            alert("File already exists.");
+        }
+    }
+
+    const deleteFile = () => {
+        if (Object.keys(files).length > 1) {
+            const confirmDelete = window.confirm(`Are you sure you want to delete ${currentFile}?`);
+            if (confirmDelete) {
+                const { [currentFile]: _, ...remainingFiles } = files;
+                setFiles(remainingFiles);
+                const newCurrentFile = Object.keys(remainingFiles)[0];
+                setCurrentFile(newCurrentFile);
+                editorRef.current.setValue(remainingFiles[newCurrentFile] || "");
+            }
+        } else {
+            alert("You can't delete the last file");
+        }
+    }
+
+    const switchFile = (fileName) => {
+        setFiles(prevFiles => ({
+            ...prevFiles,
+            [currentFile]: editorRef.current.getValue(),
+        }));
+        console.log(files)
+        setCurrentFile(fileName);
+        editorRef.current.setValue(files[fileName] || "");
+    }
+
     return(
       <div className={"TaskIDE"}>
           <div className={"editor"}>
-              <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"10px"}}>
-                  <label>{language.charAt(0).toUpperCase() + language.slice(1)}</label>
-                  <button id={"runButton"} onClick={runCode}>Run</button>
+              <div
+                style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px"}}>
+                  <div id={"fileSelectArea"}>
+                      <label id={"fileSelectText"}>File:</label>
+                      <select id={"fileSelect"} value={currentFile} onChange={
+                          (e) => {
+                              if (e.target.value === "new") {
+                                  createFile();
+                              } else {
+                                  switchFile(e.target.value);
+                              }
+                          }
+                      }>
+                          {Object.keys(files).map(file => (
+                            <option key={file} value={file}>{file}</option>
+                          ))}
+                          <option value={"new"}>New File</option>
+                      </select>
+                  </div>
+                  <div>
+                      <button onClick={deleteFile}>Delete File</button>
+                      <button id={"runButton"} onClick={runCode}>Run</button>
+                  </div>
               </div>
               <div id={"editor-input"}></div>
           </div>
           <div className={"output"}>
-              <label>Output</label>
+          <label>Output</label>
               <pre id={"console"} style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word'}}>
                     {runtimeOutput.join('\n')}
                 </pre>

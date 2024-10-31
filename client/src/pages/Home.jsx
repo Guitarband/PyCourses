@@ -55,7 +55,7 @@ function Home() {
                             style={{color: currentColour}}>Learn programming with PyCourses</span>
                       <span className={"titleTag"}>&lt;/h2&gt;</span>
                   </h2>
-                  <a href={"/course/intro_to_python"}>
+                  <a href={"/courses"}>
                       <button id={"heroButton"} style={{background: currentColour}}>
                           Get Started
                       </button>

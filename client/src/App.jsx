@@ -6,9 +6,11 @@ import NavBar from "./components/NavBar.jsx";
 import Contact from "./pages/Contact.jsx";
 import Courses from "./pages/Courses.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
+import ErrorBoundary from "./ErrorBoundary.jsx";
 
 function App() {
   return (
+    <ErrorBoundary>
     <Router>
         <div className={"App"}>
             <Routes>
@@ -33,6 +35,7 @@ function App() {
             </Routes>
         </div>
     </Router>
+    </ErrorBoundary>
   )
 }
 

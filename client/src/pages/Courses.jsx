@@ -3,21 +3,14 @@ import { Routes, Route, Outlet} from "react-router-dom";
 import Intro_to_Python from "../courses/Intro_to_Python.jsx";
 import "../styles/courseCatalogue.css"
 import NavBar from "../components/NavBar.jsx";
+import courses from "../Data/courseData.js";
+import CourseData from "../components/CourseData.jsx";
 
 function Courses() {
     const [searchQuery, setSearchQuery] = useState("");
     const [languageFilter, setLanguageFilter] = useState("");
 
-    const courseCatalogue = [
-        {
-            name: "Intro to Python",
-            url: "intro_to_python",
-            description: "Learn the basics of Python programming language",
-            language: "Python",
-        }
-    ]
-
-    const filteredCourses = courseCatalogue.filter(course =>
+    const filteredCourses = (Object.values(courses)).filter(course =>
       course.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
       (languageFilter === "" || course.language.toLowerCase() === languageFilter.toLowerCase())
     );
@@ -59,7 +52,10 @@ function Courses() {
                       </div>
                   </>
               }/>
-              <Route path={"/intro_to_python/*"} element={<Intro_to_Python/>}/>
+              {Object.entries(courses).map(([key, course]) => (
+                <Route key={key} path={'/' + course.url + '/*'} element={<CourseData courseURL={course.url}/>}/>
+              ))}
+              <Route path={"/intro_to_pythons/*"} element={<Intro_to_Python/>}/>
           </Routes>
           <Outlet/>
       </>

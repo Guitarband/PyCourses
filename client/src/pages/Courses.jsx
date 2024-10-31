@@ -3,7 +3,7 @@ import { Routes, Route, Outlet} from "react-router-dom";
 import Intro_to_Python from "../courses/Intro_to_Python.jsx";
 import "../styles/courseCatalogue.css"
 import NavBar from "../components/NavBar.jsx";
-import courses from "../Data/courseData.js";
+import courses from "../data/courseData.js";
 import CourseData from "../components/CourseData.jsx";
 
 function Courses() {

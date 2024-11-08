@@ -2,6 +2,11 @@ const courses = {
     intro_to_python: {
         name: "Intro to Python",
         description: "An introduction to Python programming",
+        details: "Intro to Python is a course designed to introduce you to the basics of Python programming." +
+          " Python is a high-level, interpreted programming language known for its simplicity and readability." +
+          " It is widely used in web development, data science, and automation." +
+          " This course will cover the basics of Python programming, including variables, loops, and conditional statements.\n\n" +
+          " Python is a high level programming language that is easy to learn and easy to read. It is widely used and is capable of creating apps for web development, data science, and automation.",
         url: "intro_to_python",
         language: "Python",
         tasks: {
@@ -119,18 +124,44 @@ const courses = {
     python_object_oriented: {
         name: "Python Object Oriented Programming",
         description: "An introduction to Object Oriented Programming in Python",
+        details: "",
         url: "python_object_oriented",
         language: "Python",
         fileSystemEnabled: true,
-        tasks: {}
+        tasks: {
+            hello_world: {
+                title: "Hello World",
+                description: "Lets start learning Python with the basics",
+                details: "Write a program that prints 'Hello World!'",
+                fileSystemEnabled: false,
+                baseCode: "",
+                expectedOutput: "Hello World!",
+                url: "hello_world",
+                nextTask: "Variables",
+                nextTaskURL: "variables"
+            }
+        }
     },
     template: {
         name: "Template",
         description: "An introduction to Object Oriented Programming in Python",
+        details: "",
         url: "template",
         language: "Python",
         fileSystemEnabled: true,
-        tasks: {}
+        tasks: {
+            hello_world: {
+                title: "Hello World",
+                description: "Lets start learning Python with the basics",
+                details: "Write a program that prints 'Hello World!'",
+                fileSystemEnabled: false,
+                baseCode: "",
+                expectedOutput: "Hello World!",
+                url: "hello_world",
+                nextTask: "Variables",
+                nextTaskURL: "variables"
+            }
+        }
     }
 }
 

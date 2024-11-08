@@ -4,8 +4,17 @@
     margin: 0 auto;
 }
 
+#courseTitle{
+    padding: 5vh 5vw;
+    margin: 0;
+    background-color: #f1f0e1 ;
+    border-bottom: 2px solid #aaaaaa;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 .taskMap{
-    padding: 5vw 10vh;
+    padding: 5vh 5vw 15vh 5vw;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
@@ -51,12 +60,6 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-#taskDescription {
-    font-size: 1.2em;
-    line-height: 1.5;
-    color: #555;
-}
-
 #taskTitle {
     font-size: 2em;
     font-weight: bold;
@@ -65,6 +68,21 @@
     border-bottom: 2px solid #93c5ff;
     padding-bottom: 10px;
     text-align: left;
+}
+
+#taskDescription {
+    font-size: 1.2em;
+    line-height: 1.5;
+    color: #555;
+    font-style: italic;
+}
+
+#taskDetails{
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 1vh 2vw 1vh 0;
+    line-height: 1.6;
 }
 
 #previousTask, #nextTask {

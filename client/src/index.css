@@ -36,6 +36,7 @@ h1 {
 }
 
 button {
+  box-sizing: border-box;
   margin-right: 10px;
   border-radius: 8px;
   border: 1px solid transparent;
@@ -50,11 +51,6 @@ button {
 
 button:hover {
   transition: border-color 0.4s, background-color 0.4s, color 0.4s;
-}
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
 @media (prefers-color-scheme: light) {

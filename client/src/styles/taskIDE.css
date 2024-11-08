@@ -66,10 +66,9 @@
 }
 
 #deleteButton:hover{
-    padding: 10px 20px;
     background-color: #ff0000;
     color: white;
-    border: 1px solid transparent;
+    border: 2px solid transparent;
     cursor: pointer;
 }
 
@@ -82,10 +81,9 @@
 }
 
 #runButton:hover{
-    padding: 10px 20px;
     background-color: #008000;
     color: white;
-    border: 1px solid transparent;
+    border: 2px solid transparent;
     cursor: pointer;
 }
 

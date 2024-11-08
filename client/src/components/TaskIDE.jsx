@@ -1,19 +1,27 @@
 import React, {useEffect, useState, useRef} from 'react'
 import * as monaco from 'monaco-editor'
 import '../styles/taskIDE.css'
+import Alert from "./Alert.jsx";
 
-function TaskIDE({language, baseCode, fileSystem}) {
+function TaskIDE({ language, baseCode, fileSystem }) {
     const editorRef = useRef(null)
     const [runtime, setRuntime] = useState(null)
-    const [editorConsole, setEditorConsole] = useState(null)
     const [runtimeOutput, setRuntimeOutput] = useState([])
     const [inputValue, setInputValue] = useState("");
     const [files, setFiles] = useState({'main.py': baseCode})
     const [currentFile, setCurrentFile] = useState('main.py')
+    const [alertVisible, setAlertVisible] = useState(false)
+    const [alertData, setAlertData] = useState({})
+    const [alertExecute, setAlertExecute] = useState(() => {})
+
+    const alertHandler = (data, execute) => {
+        setAlertData(data)
+        setAlertExecute(() => execute)
+        setAlertVisible(true)
+    }
 
     useEffect(() => {
         const editor = document.getElementById('editor-input')
-        setEditorConsole(document.getElementById('console'))
 
         if(!editorRef.current) {
             editorRef.current = monaco.editor.create(editor, {
@@ -27,26 +35,15 @@ function TaskIDE({language, baseCode, fileSystem}) {
 
         const loadRuntime = async () => {
             if (language === 'python' && !runtime) {
-                const pyodideInstance = await window.loadPyodide();
+                const pyodideInstance = await window.loadPyodide()
+
                 pyodideInstance.setStdout({
                     batched: (msg) => setRuntimeOutput(prev => [...prev, msg])
                 });
-                pyodideInstance.setStdin(() => {
-                    return new Promise((resolve) => {
-                        const handleInput = () => {
-                            resolve(inputValue);
-                            setInputValue("");
-                        };
-
-                        const userInput = window.prompt("Enter input:");
-                        if (userInput !== null) {
-                            setInputValue(userInput);
-                            handleInput();
-                        } else {
-                            handleInput();
-                        }
-                    });
-                });
+                pyodideInstance.runPythonAsync('from js import prompt\n' +
+                  'def input(p):\n' +
+                  '    return p + " " + prompt(f"Python is asking for input \\n \\n {p}")\n' +
+                  '__builtins__.input = input')
                 setRuntime(pyodideInstance);
                 console.log("Runtime loaded");
             }
@@ -70,10 +67,14 @@ function TaskIDE({language, baseCode, fileSystem}) {
         }
     })
 
-
     function runCode(){
         if(!runtime){
-            alert(`Error loading ${language} runtime environment, Please refresh the page and try again`)
+            alertHandler(
+              {
+                message: `Error loading ${language} runtime environment, Please refresh the page and try again`,
+                type: 'error'
+              }
+            )
             return
         }
 
@@ -85,7 +86,12 @@ function TaskIDE({language, baseCode, fileSystem}) {
                 executePython()
                 break
             default:
-                alert(`Language ${language} not supported`)
+                alertHandler(
+                  {
+                      message: `Language ${language} not supported`,
+                      type: 'error'
+                  }
+                )
                 setRuntimeOutput(["Language not supported"])
         }
     }
@@ -120,8 +126,17 @@ function TaskIDE({language, baseCode, fileSystem}) {
         }
     }
 
-    const createFile = () => {
-        const fileName = prompt("Create a new file. Please specify file extension:");
+    const createFileHandler = () => {
+        alertHandler(
+          {
+              message: "Create a new file. Please specify the file type.",
+              type: 'fileCreate'
+          },
+            createFile
+        )
+    }
+
+    const createFile = (fileName) => {
         if (fileName && !files[fileName]) {
             setFiles((prevFiles) => ({
                 ...prevFiles,
@@ -130,32 +145,74 @@ function TaskIDE({language, baseCode, fileSystem}) {
             setCurrentFile(fileName);
             editorRef.current.setValue("");
         } else if (files[fileName]) {
-            alert("File already exists.");
+            alertHandler(
+              {
+                  message: `File ${fileName} already exists`,
+                  type: 'error'
+              }
+            )
+        }
+    }
+
+    const deleteFileHandler = () => {
+        if (currentFile === 'main.py') {
+            alertHandler(
+              {
+                  message: `You can't delete ${currentFile}!`,
+                  type: 'error'
+              }
+            )
+        } else if (Object.keys(files).length > 1) {
+            alertHandler(
+              {
+                  message: `Are you sure you want to delete ${currentFile}?`,
+                  type: 'fileDelete'
+              },
+                deleteFile
+            )
+        } else {
+            alertHandler(
+              {
+                  message: `You can't delete ${currentFile} as it is the last file!`,
+                  type: 'error'
+              }
+            )
         }
     }
 
     const deleteFile = () => {
-        if (Object.keys(files).length > 1) {
-            const confirmDelete = window.confirm(`Are you sure you want to delete ${currentFile}?`);
-            if (confirmDelete) {
-                const { [currentFile]: _, ...remainingFiles } = files;
-                setFiles(remainingFiles);
-                const newCurrentFile = Object.keys(remainingFiles)[0];
-                setCurrentFile(newCurrentFile);
-                editorRef.current.setValue(remainingFiles[newCurrentFile] || "");
-            }
+        if (currentFile === 'main.py') {
+            alertHandler(
+              {
+                  message: `You can't delete ${currentFile}!`,
+                  type: 'error'
+              }
+            )
+        } else if (Object.keys(files).length > 1) {
+            const { [currentFile]: _, ...remainingFiles } = files;
+            setFiles(remainingFiles);
+            const newCurrentFile = Object.keys(remainingFiles)[0];
+            setCurrentFile(newCurrentFile);
+            editorRef.current.setValue(remainingFiles[newCurrentFile] || "");
         } else {
-            alert("You can't delete the last file");
+            alertHandler(
+              {
+                  message: `You can't delete ${currentFile} as it is the last file!`,
+                  type: 'error'
+              }
+            )
         }
     }
 
     const switchFile = (fileName) => {
-        saveFile()
-        setCurrentFile(fileName);
-        editorRef.current.setValue(files[fileName] || "");
+        saveFile().then(() => {
+            console.log(files)
+            setCurrentFile(fileName);
+            editorRef.current.setValue(files[fileName] || "");
+        })
     }
 
-    const saveFile = () => {
+    const saveFile = async () => {
         setFiles(prevFiles => ({
             ...prevFiles,
             [currentFile]: editorRef.current.getValue(),
@@ -164,6 +221,9 @@ function TaskIDE({language, baseCode, fileSystem}) {
 
     return(
       <div className={"TaskIDE"}>
+          {alertVisible && (
+            <Alert alertData={alertData} setAlertVisible={setAlertVisible} alertExecute={alertExecute} />
+          )}
           <div className={"editor"}>
               <div
                 style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px"}}>
@@ -174,7 +234,7 @@ function TaskIDE({language, baseCode, fileSystem}) {
                             <select id={"fileSelect"} value={currentFile} onChange={
                                 (e) => {
                                     if (e.target.value === "new") {
-                                        createFile();
+                                        createFileHandler();
                                     } else {
                                         switchFile(e.target.value);
                                     }
@@ -187,7 +247,7 @@ function TaskIDE({language, baseCode, fileSystem}) {
                             </select>
                         </div>
                         <div>
-                            <button id={"deleteButton"} onClick={deleteFile}>Delete File</button>
+                            <button id={"deleteButton"} onClick={deleteFileHandler}>Delete File</button>
                             <button id={"runButton"} onClick={runCode}>Run</button>
                         </div>
                     </>
@@ -195,8 +255,7 @@ function TaskIDE({language, baseCode, fileSystem}) {
                     <>
                         <h3>{language[0].toUpperCase() + language.slice(1)} Editor</h3>
                         <div>
-                            <button id={"deleteButton"} onClick={deleteFile}>Delete File</button>
-                            <button id={"runButton"} onClick={runCode}>Run</button>
+                            <button id={"runButton"} onClick={() => runCode}>Run</button>
                         </div>
                     </>
                   }
@@ -207,7 +266,7 @@ function TaskIDE({language, baseCode, fileSystem}) {
               <label>Output</label>
               <pre id={"console"} style={{whiteSpace: 'pre-wrap', wordWrap: 'break-word'}}>
                     {runtimeOutput.join('\n')}
-                </pre>
+              </pre>
           </div>
       </div>
 

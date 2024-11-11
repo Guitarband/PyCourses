@@ -6,6 +6,15 @@
     padding: 2vw 0;
 }
 
+#catalogueTitle{
+    padding: 5vh 5vw;
+    margin: 0;
+    background-color: #f1f0e1 ;
+    border-bottom: 2px solid #aaaaaa;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 .courseFinder{
     width: 60vw;
     max-height: 5vh;
@@ -33,7 +42,8 @@
     padding: 5vh;
     display: grid;
     grid-template-columns: 1fr;
-    grid-auto-rows: minmax(210px, auto);
+    grid-auto-rows: minmax(auto, auto);
+    gap: 10px;
     margin: 0 auto;
 }
 
@@ -44,7 +54,7 @@
     justify-content: flex-start;
     align-items: start;
     width: 60vw;
-    height: 200px;
+    height: auto;
     border-radius: 10px;
     background-color: #f9f9f9;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
@@ -54,4 +64,37 @@
 
 .courseSlot:hover {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 768px) {
+    .Catalogue{
+        font-size: 0.8em;
+        padding: 4vw 0;
+    }
+
+    #catalogueTitle{
+        font-size: 1.2em;
+    }
+
+    .courseFinder{
+        width: 80vw;
+        max-height: 5vh;
+        display: flex;
+        gap: 10px;
+        outline: none;
+    }
+
+    .courseFinder input::placeholder{
+        font-size: 0.8em;
+    }
+
+    .courseMap {
+        grid-auto-rows: minmax(auto, auto);
+        gap: 10px;
+    }
+
+    .courseSlot {
+        width: 80vw;
+        height: 100px;
+    }
 }

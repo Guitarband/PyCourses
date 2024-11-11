@@ -7,7 +7,6 @@ function TaskIDE({ language, baseCode, fileSystem }) {
     const editorRef = useRef(null)
     const [runtime, setRuntime] = useState(null)
     const [runtimeOutput, setRuntimeOutput] = useState([])
-    const [inputValue, setInputValue] = useState("");
     const [files, setFiles] = useState({'main.py': baseCode})
     const [currentFile, setCurrentFile] = useState('main.py')
     const [alertVisible, setAlertVisible] = useState(false)
@@ -55,7 +54,9 @@ function TaskIDE({ language, baseCode, fileSystem }) {
             if(editorRef.current !== null) {
                 const cleanUpPyodide = async () => {
                     for(const filename of Object.keys(files)){
-                        await runtime.runPythonAsync(`import os\nos.remove('${filename}')`)
+                        if (filename !== 'main.py') {
+                            await runtime.runPythonAsync(`import os\nos.remove('${filename}')`)
+                        }
                     }
                 }
 
@@ -104,26 +105,28 @@ function TaskIDE({ language, baseCode, fileSystem }) {
             )
         }
 
-        try{
-            for(const [filename, fileContent] of Object.entries(files)){
-                if(filename !== "main.py" && fileContent.trim()) {
-                    if(filename === currentFile) {
-                        loadFile(filename, editorRef.current.getValue())
-                    }else {
-                        loadFile(filename, fileContent)
+        saveFile().then(async () => {
+            try {
+                for (const [filename, fileContent] of Object.entries(files)) {
+                    if (filename !== "main.py" && fileContent.trim()) {
+                        if (filename === currentFile) {
+                            loadFile(filename, editorRef.current.getValue())
+                        } else {
+                            loadFile(filename, fileContent)
+                        }
                     }
                 }
-            }
 
-            if(currentFile !== "main.py") {
-                await runtime.runPythonAsync(files['main.py'])
-            }else{
-                await runtime.runPythonAsync(editorRef.current.getValue())
+                if (currentFile !== "main.py") {
+                    await runtime.runPythonAsync(files['main.py'])
+                } else {
+                    await runtime.runPythonAsync(editorRef.current.getValue())
+                }
+            } catch (error) {
+                console.log("Error: ", error);
+                setRuntimeOutput(prev => [...prev, error.toString()]);
             }
-        }catch (error) {
-            console.log("Error: ", error);
-            setRuntimeOutput(prev => [...prev, error.toString()]);
-        }
+        })
     }
 
     const createFileHandler = () => {
@@ -255,7 +258,7 @@ function TaskIDE({ language, baseCode, fileSystem }) {
                     <>
                         <h3>{language[0].toUpperCase() + language.slice(1)} Editor</h3>
                         <div>
-                            <button id={"runButton"} onClick={() => runCode}>Run</button>
+                            <button id={"runButton"} onClick={runCode}>Run</button>
                         </div>
                     </>
                   }

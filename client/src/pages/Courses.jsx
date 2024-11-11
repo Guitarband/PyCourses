@@ -22,7 +22,7 @@ function Courses() {
               <Route path={"/"} element={
                   <>
                       <NavBar/>
-                      <h2 id={"courseTitle"}>Available Courses</h2>
+                      <h2 id={"catalogueTitle"}>Available Courses</h2>
                       <div className={"Catalogue"}>
                           <div className={"courseFinder"}>
                               <input

@@ -77,3 +77,10 @@
     border: 2px solid transparent;
     cursor: pointer;
 }
+
+@media (max-width: 768px) {
+    .alert-box {
+        max-width: 80vw;
+        font-size: 1.1em
+    }
+}

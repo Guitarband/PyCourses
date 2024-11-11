@@ -5,7 +5,7 @@
 }
 
 #courseTitle{
-    padding: 5vh 5vw;
+    padding: 2vh 5vw 5vh 5vw;
     margin: 0;
     background-color: #f1f0e1 ;
     border-bottom: 2px solid #aaaaaa;
@@ -87,4 +87,48 @@
 
 #previousTask, #nextTask {
     margin-right: 50px;
+}
+
+@media (max-width: 768px){
+    .Course{
+        font-size: 0.8em;
+    }
+
+    .taskMap{
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        padding: 2vh 6vw 10vw 6vw;
+    }
+
+    .taskSlot{
+        width: 200px;
+        height: 150px;
+    }
+
+    .CourseContent{
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        padding: 1vh 2vw 5vh 2vw;
+    }
+
+
+    .taskData{
+        width: 100%;
+    }
+
+    #taskTitle{
+        font-size: 1.5em;
+    }
+
+    #taskDescription{
+        font-size: 1em;
+    }
+
+    #taskDetails{
+        font-size: 1em;
+    }
+
+    #previousTask, #nextTask {
+        margin-right: 20px;
+    }
 }

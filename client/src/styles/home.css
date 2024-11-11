@@ -10,6 +10,12 @@
     font-size: 1.6em;
 }
 
+.titleText{
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
 .hero{
     border: 2px solid black;
     border-radius: 20px;
@@ -19,7 +25,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 20vh 3vw 20vh 3vw;
-    margin: 8vh 2vw 6vw 2vw;
+    margin: 8vh 2vw 8vh 2vw;
 }
 
 #heroButton, #heroButton:hover{
@@ -87,26 +93,41 @@
 }
 
 .carousel{
-    padding: 10vh 2vw;
+    padding: 8vh 2vw;
     display: grid;
     grid-template-columns: repeat(4, 40vw);
     grid-template-rows: 1fr;
-    grid-column-gap: 3rem;
+    grid-column-gap: 2.5rem;
     grid-row-gap: 1rem;
     overflow: scroll;
     scroll-snap-type: both mandatory;
     scroll-padding: 1rem;
     scrollbar-width: none;
     margin: 0;
-}
-
-.titleText{
-    font-size: 1.8em;
-    font-weight: bold;
-    margin: 10px 0;
+    font-size: 0.9em;
 }
 
 .contactDirect{
     padding: 6vw 5vh;
     background-color: #FFF3E0;
+}
+
+@media (max-width: 768px){
+    .hero{
+        flex-direction: column;
+        padding: 15vh 3vw 15vh 3vw;
+        font-size: 0.7em;
+    }
+
+    .carousel{
+        padding: 5vh 2vw 5vh 4vw;
+        grid-template-columns: repeat(4, 80vw);
+        font-size: 0.8em;
+        grid-column-gap: 1.2rem;
+    }
+
+    .contactDirect{
+        padding: 6vw 5vh;
+        font-size: 0.8em;
+    }
 }

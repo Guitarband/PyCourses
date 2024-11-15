@@ -13,7 +13,8 @@ function Courses() {
 
     const filteredCourses = (Object.values(courses)).filter(course =>
       course.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-      (languageFilter === "" || course.language.toLowerCase() === languageFilter.toLowerCase())
+      (languageFilter === "" || course.language.toLowerCase() === languageFilter.toLowerCase()) &&
+      course.name !== "Template"
     );
 
     return (

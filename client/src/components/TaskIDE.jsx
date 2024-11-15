@@ -7,7 +7,7 @@ function TaskIDE({ language, baseCode, fileSystem }) {
     const editorRef = useRef(null)
     const [runtime, setRuntime] = useState(null)
     const [runtimeOutput, setRuntimeOutput] = useState([])
-    const [files, setFiles] = useState({'main.py': baseCode})
+    const [files, setFiles] = useState(baseCode)
     const [currentFile, setCurrentFile] = useState('main.py')
     const [alertVisible, setAlertVisible] = useState(false)
     const [alertData, setAlertData] = useState({})

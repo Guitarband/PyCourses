@@ -11,6 +11,7 @@ function Courses() {
     const [searchQuery, setSearchQuery] = useState("");
     const [languageFilter, setLanguageFilter] = useState("");
 
+    // Filters the courses from the courseData.js file to only display what the user wants
     const filteredCourses = (Object.values(courses)).filter(course =>
       course.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
       (languageFilter === "" || course.language.toLowerCase() === languageFilter.toLowerCase()) &&
@@ -42,10 +43,11 @@ function Courses() {
                           <div className={'courseMap'}>
                               {filteredCourses.length > 0 ? (
                                 filteredCourses.map((course, index) => (
-                                  <div key={index} className={"courseSlot"}>
+
+                                  <a href={`/courses/${course.url}`} key={index} className={"courseSlot"}>
                                       <a href={`/courses/${course.url}`}>{course.name}</a>
                                       <p className={"courseDescription"}>{course.description}</p>
-                                  </div>
+                                  </a>
                                 ))
                               ) : (
                                 <p>No courses found</p>

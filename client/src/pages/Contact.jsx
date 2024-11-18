@@ -4,12 +4,15 @@ import Footer from "../components/Footer.jsx";
 const Contact = () => {
     const SubmitContact = async (event) => {
         event.preventDefault();
+
+        // Get the form element and the current datetime
         const form = event.target;
         const currentDate = new Date();
         const options = { timeZoneName: 'short', hour: '2-digit', minute: '2-digit', second: '2-digit', year: 'numeric', month: 'numeric', day: 'numeric' };
         const timeString = currentDate.toLocaleString('en-US', options);
 
         try {
+            // Send a post request to an Azure Function that sends an email to the user
             const response = await fetch("https://contactformreceiver.azurewebsites.net/api/sendEmail?", {
                 method: 'POST',
                 body: JSON.stringify({
@@ -20,6 +23,7 @@ const Contact = () => {
                 }),
             });
 
+            // If the response is ok, alert the user that the message was sent successfully
             if (response.ok) {
                 console.log("Success:", response);
                 const result = await response.json();

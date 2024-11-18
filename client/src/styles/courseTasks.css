@@ -71,6 +71,13 @@
     text-align: left;
 }
 
+.taskSummary {
+    text-decoration: none;
+    display: block;
+    font-weight: normal;
+    color: black;
+}
+
 #taskDescription {
     font-size: 1.2em;
     line-height: 1.5;

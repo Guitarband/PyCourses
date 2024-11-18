@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import * as monaco from 'monaco-editor'
 import '../styles/taskIDE.css'
 import Alert from "./Alert.jsx";
@@ -99,28 +99,47 @@ function TaskIDE({ language, baseCode, fileSystem }) {
 
     async function executePython() {
         const loadFile = async (filename, fileContent) => {
-            await runtime.runPythonAsync(
-              `with open('${filename}','w') as f:
-    f.write(${JSON.stringify(fileContent)})`
-            )
+            await runtime.runPythonAsync(`with open('${filename}', 'w') as f:\n    f.write('''${fileContent}''')`)
+        }
+
+        const readFile = async (filePath) => {
+            const content = runtime.FS.readFile(filePath, {encoding: 'utf8'})
+            const stringRegex = /(['"`])(.*?)(\1)/gs;
+            return content.replace(stringRegex, (match, quote, str, closingQuote) => {
+                const sanitizedString = str.replace(/\n/g, '\\n');
+                return `${quote}${sanitizedString}${closingQuote}`;
+            });
+        }
+
+        const getAllFiles = async () => {
+            return runtime.FS.readdir('/home/pyodide')
         }
 
         saveFile().then(async () => {
             try {
                 for (const [filename, fileContent] of Object.entries(files)) {
-                    if (filename !== "main.py" && fileContent.trim()) {
+                    if (fileContent.trim()) {
                         if (filename === currentFile) {
-                            loadFile(filename, editorRef.current.getValue())
+                            loadFile(`/home/pyodide/${filename}`, editorRef.current.getValue())
                         } else {
-                            loadFile(filename, fileContent)
+                            loadFile(`/home/pyodide/${filename}`, fileContent)
                         }
                     }
                 }
-
                 if (currentFile !== "main.py") {
                     await runtime.runPythonAsync(files['main.py'])
                 } else {
                     await runtime.runPythonAsync(editorRef.current.getValue())
+                }
+                const filesInFS = await getAllFiles();
+                for (const file of filesInFS) {
+                    if(file !== "." && file !== "..") {
+                        const fileContent = await readFile(`/home/pyodide/${file}`);
+                        setFiles(prevFiles => ({
+                            ...prevFiles,
+                            [file]: fileContent
+                        }))
+                    }
                 }
             } catch (error) {
                 console.log("Error: ", error);

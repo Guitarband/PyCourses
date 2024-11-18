@@ -5,15 +5,16 @@ const ScrollRevealContent = ({ children }) => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
+        // Gets the observer element
         const observer = new IntersectionObserver(
           ([entry]) => {
-              if (entry.isIntersecting) {
+              if (entry.isIntersecting) { // Checks if the html element is intersecting with the viewport
                 setIsVisible(true)
               } else{
                 setIsVisible(false)
               }
           },
-          { threshold: 0.1 }
+          { threshold: 0.1 } // Threshold meaning 10% of the element needs to be in the viewport to trigger
         );
 
         if (ref.current) {
@@ -27,6 +28,7 @@ const ScrollRevealContent = ({ children }) => {
         };
     }, []);
 
+    // We basically pass the child elements to the div and it handles the processes on its own
     return (
       <div
         ref={ref}

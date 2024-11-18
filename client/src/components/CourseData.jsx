@@ -19,11 +19,11 @@ function CourseData({ courseURL }) {
                       </div>
                       <h2>Tasks</h2>
                       <div className={'taskMap'}>
-                          {Object.entries(courses[courseURL].tasks).map(([key, task]) => (
-                            <div key={key} className={"taskSlot"}>
-                                <a href={`/courses/${courseURL}/${task.url}`}>{task.title}</a>
-                                <p className={"taskDescription"}>{task.description}</p>
-                            </div>
+                          {Object.entries(courses[courseURL].tasks).map(([key, task], index) => (
+                            <a href={`/courses/${courseURL}/${task.url}`} key={key} className={"taskSlot"}>
+                                <a href={`/courses/${courseURL}/${task.url}`}>{index+1}. {task.title}</a>
+                                <p className={"taskSummary"}>{task.description}</p>
+                            </a>
                           ))}
                       </div>
                       <Footer />

@@ -263,7 +263,10 @@ const courses = {
                   " Each key is separated from its value by a colon, and the items are separated by commas." +
                   " Dictionaries are mutable, meaning that you can change the items in a dictionary after it has been created." +
                   " In Python, dictionaries are defined using curly braces { }.\n\n" +
-                  "Items in a dictionary can be accessed by their key, and you can also make use of methods provided by dictionaries for adding, removing, and modifying items.\n\n" +
+                  "Items in a dictionary can be accessed by their key, returning the value that is paired with that specific key." +
+                  " Keys in a dictionary are unique and as such, giving a new value replaces the previous one.\n\n" +
+                  "Dictionaries have many unique functions such as items() which returns a list containing a tuple for each key value pair." +
+                  " There are also functions such as keys() and items() which return a list of keys and items respectively.\n\n" +
                   "In this task, you are given a dictionary of names and ages. Add a new key-value pair to the dictionary, then print each key-value pair in the dictionary one by one.",
                 fileSystemEnabled: false,
                 baseCode: {
@@ -275,16 +278,144 @@ const courses = {
                       "\n" +
                       "people[\"David\"] = 40 #Adds a new key-value pair to the people dictionary\n" +
                       "\n" +
+                      "print(people.items()) #Returns a list of tuples containing the key-value pairs\n" +
+                      "\n" +
                       "#Use a for loop to print the key-value pairs in the dictionary\n" +
                       "\n" +
-                      "print(people[\"Alice\"]) #Prints the value associated with the key \"Alice\""
+                      "print(people[\"Alice\"]) #Prints the value associated with the key \"Alice\"\n"
                 },
                 url: "utilising_dictionaries",
                 previousTask: "Working with Lists",
                 previousTaskURL: "working_with_lists",
+                nextTask: "Packing and Unpacking Tuples",
+                nextTaskURL: "packing_and_unpacking_tuples"
+            },
+            packing_and_unpacking_tuples: {
+                title: "Packing and Unpacking Tuples",
+                description: "Learn how to pack and unpack Tuples in Python",
+                details: "Tuples are another data structure in Python, similar to lists, but they cannot be changed after being defined." +
+                  " Tuples are defined using parentheses ( ) and items are separated by commas, and items are accessible by index.\n\n" +
+                  "Packing and unpacking tuples is a common practice in Python, and allows you to assign multiple values to multiple variables in a single line of code." +
+                  " Declaring a tuple is known as packing, as you specify the values of the tuple and store it into one variable." +
+                  " Unpacking is a process that involves defining multiple variables to receive the values contained in the tuple\n\n" +
+                  "In this task, you are given multiple tuples containing names, ages, and birth years." +
+                  " Unpack the data for personC and print the sum of all the ages." ,
+                fileSystemEnabled: false,
+                baseCode: {
+                    "main.py": "personA = (\"Alice\", 25, 2000 )\n" +
+                      "personB = (\"Bob\", 22)\n" +
+                      "personC = (\"Charlie\", 24)\n" +
+                      "\n" +
+                      "\n" +
+                      "(nameA, ageA, birthYearA) = personA\n" +
+                      "ageB = personB[1]\n" +
+                      "\n" +
+                      "#Unpack the personC tuple into separate variables\n" +
+                      "\n" +
+                      "\n" +
+                      "#Add the three ages and print them\n"
+                },
+                url: "packing_and_unpacking_tuples",
+                previousTask: "Utilising Dictionaries",
+                previousTaskURL: "utilising_dictionaries",
+                nextTask: "File I/O",
+                nextTaskURL: "file_io"
+            },
+            file_io: {
+                title: "File I/O",
+                description: "Learn how to read and write files in Python",
+                details: "File I/O (Input/Output) is a core function of any programming language, allowing you to read and write data to and from files." +
+                  " Python has built-in functions that allow you to open, read, write, and close files.\n\n" +
+                  "The open() function is used to open a file, and takes two arguments: the file name and the mode in which the file should be opened." +
+                  " The mode can be 'r' for reading, 'w' for writing, 'a' for appending, and 'r+' for reading and writing.\n\n" +
+                  "In this task, you are given a file named 'example.txt' containing a list of names." +
+                  " Read the file and print each name, then add a new name to the file." +
+                  " Remember to close the file after you are done reading and writing.\n\n" +
+                  "Check the 'example.txt' file from the drop-down menu after running the code.",
+                fileSystemEnabled: true,
+                baseCode: {
+                    "example.txt": "Alice\n" +
+                      "Bob\n" +
+                      "Charlie\n" +
+                      "David\n" +
+                      "Eve\n",
+                    "main.py": "nameFile = open(\"example.txt\", \"r\")\n" +
+                      "names = nameFile.readlines()\n" +
+                      "nameFile.close()\n" +
+                      "\n" +
+                      "#Print each name in the names list\n" +
+                      "\n" +
+                      "\n" +
+                      "#Append a new name to the file\n"
+                },
+                url: "file_io",
+                previousTask: "Packing and Unpacking Tuples",
+                previousTaskURL: "packing_and_unpacking_tuples",
                 nextTask: "Error Handling",
                 nextTaskURL: "error_handling"
             },
+            error_handling: {
+                title: "Error Handling",
+                description: "Learn how to handle errors in Python",
+                details: "Error handling is an essential part of programming, allowing you to gracefully handle errors that may occur during execution." +
+                  " Python provides a way to catch and handle exceptions using the try, except, else, and finally blocks.\n\n" +
+                  "The try block contains the code that may raise an exception, and the except block contains the code that handles the exception." +
+                  " The else block is executed if no exceptions are raised, and the finally block is executed regardless of whether an exception was raised.\n\n" +
+                  "In this task, you are given a function that divides two numbers." +
+                  " Add a try-except block to handle the ZeroDivisionError that occurs when dividing by zero." +
+                  " In the except block, print 'Cannot divide by zero'.",
+                fileSystemEnabled: false,
+                baseCode: {
+                    "main.py": "def divide(a, b):\n" +
+                      "    return a / b\n" +
+                      "\n" +
+                      "result = divide(10, 0)\n" +
+                      "print(result)\n" +
+                      "\n" +
+                      "try:\n" +
+                      "    #Try to divide by zero here\n" +
+                      "    print()\n" +
+                      "except:\n" +
+                      "    #Print an error if it occurs\n" +
+                      "    print()\n"
+                },
+                url: "error_handling",
+                previousTask: "File I/O",
+                previousTaskURL: "file_io",
+                nextTask: "Working with multiple python files",
+                nextTaskURL: "working_with_multiple_python_files"
+            },
+            working_with_multiple_python_files: {
+                title: "Working with multiple python files",
+                description: "Learn how to split your code into multiple files",
+                details: "As your codebase grows, it may become difficult to manage all your code in a single file." +
+                  " Python allows you to split your code into multiple files, making it easier to organize and maintain." +
+                  " You can import functions and classes from other files using the import statement.\n\n" +
+                  "In this task, you are given two files: main.py and helper.py." +
+                  " Firstly, open the helper.py file and modify the square function to return the square of the input." +
+                  " Next, import the square function from helper.py into main.py.\n\n" +
+                  "Now that you have imported the function, you can call it anywhere after the import statement to use it." +
+                  " Call the imported function in the for loop of the allSquares function and print the result." ,
+                fileSystemEnabled: true,
+                baseCode: {
+                    "main.py": "#Import the function below by writing 'from helper import square'\n" +
+                      "\n" +
+                      "def allSquares(n):\n" +
+                      "    for i in range(1, n + 1):\n" +
+                      "        #Call the imported function and print the result\n" +
+                      "        print(i)\n" +
+                      "\n" +
+                      "allSquares(5)",
+                    "helper.py": "#This is the function that we intend to import to main.py\n" +
+                      "def square(n):\n" +
+                      "    #Square the value before it is returned\n" +
+                      "\n" +
+                      "    return n"
+                },
+                url: "working_with_multiple_python_files",
+                previousTask: "Error Handling",
+                previousTaskURL: "error_handling",
+            }
         }
     },
     python_object_oriented: {

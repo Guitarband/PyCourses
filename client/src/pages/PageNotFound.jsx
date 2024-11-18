@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const PageNotFound = () => {
+    // For the * route, meaning any non defined page route, display the not found page
     return (
       <div className="not-found-container">
           <h1>404</h1>

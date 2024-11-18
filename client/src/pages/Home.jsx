@@ -4,30 +4,41 @@ import "../styles/home.css";
 import Footer from "../components/Footer.jsx";
 
 function Home() {
+    // Colours stored for the changing text effect
     const colours = [
       "red", "sienna", "navy", "maroon", "olivedrab", "#4B0082"
     ]
+
+    // React State variables that store and set the current state, making the variables storing an asynchronous operation
     const [currentColour, setCurrentColour] = useState(colours[0])
     const [currentText, setCurrentText] = useState(colours[0])
     const [isDeleting, setIsDeleting] = useState(false)
     const [colorIndex, setColorIndex] = useState(0)
     const [isPaused, setIsPaused] = useState(false)
 
+    // useEffect is a process that runs after the page is rendered, essentially an 'onLoad' function
     useEffect(() => {
         const text = colours[colorIndex]
+
+        // setInterval is a function that runs a function every x milliseconds
         const typingInterval = setInterval(() => {
+            // Checks if isPaused is true, if so, returns to avoid running the process
             if (isPaused) return
 
+            // Checks if isDeleting is true, if so, deletes the last character in the currentText
             if (isDeleting) {
                 setCurrentText((prev) => prev.slice(0, -1))
                 if (currentText === "") {
                     setIsDeleting(false)
                 }
             } else {
+                // If not deleting, adds the next character in the text to the currentText
                 setCurrentText((prev) => text.slice(0, prev.length + 1))
+                // When the currentText is equal to the text, changes the colour of the text and pauses the process
                 if (currentText === text) {
                     setCurrentColour(colours[colorIndex])
                     setIsPaused(true)
+                    // Tells the process to continue with new colour and text after 3 seconds
                     setTimeout(() => {
                         let newIndex = Math.floor(Math.random() * colours.length)
                         if(newIndex === colorIndex) newIndex = (newIndex + 1) % colours.length
@@ -38,8 +49,9 @@ function Home() {
                     }, 3000)
                 }
             }
-        }, isDeleting ? 100 : 200)
+        }, isDeleting ? 100 : 200) // Alternating interval speeds for deleting and adding characters
 
+        // Cleanup function that runs when the page closes
         return () => clearInterval(typingInterval)
     }, [currentText, isDeleting, colorIndex])
 
